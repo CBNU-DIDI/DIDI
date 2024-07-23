@@ -1,5 +1,13 @@
 <script>
     window.onload = () => {
+      if (new URL(location.href).searchParams.get('error')) {
+        const msg= new URL(location.href).searchParams.get('error');
+        alert(msg);
+      }
+      if (new URL(location.href).searchParams.get('message')) {
+        const msg= new URL(location.href).searchParams.get('message');
+        alert(msg);
+      }
     };
   </script>
     </body>
