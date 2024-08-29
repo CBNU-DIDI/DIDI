@@ -1,4 +1,8 @@
-export interface IIssueCredentialInfo{
-        email : string;
-        name : string;
+export interface IVoteIssueCredentialInfo{
+        vc : string;
+        room : string;
+}
+
+export interface IDidIssueCredentialInfo{
+        did:string;
 }

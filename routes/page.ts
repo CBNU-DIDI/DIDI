@@ -1,10 +1,10 @@
 import express from 'express';
-import {getVoteRooms} from '../controllers/voteRoom';
+import {getVoteRooms, getVoteRoom} from '../controllers/voteRoom';
 import { isLoggedIn, sendToastForVC } from '../middlewares';
 const router = express.Router();
 
-//GET /
-router.get('/',(req,res,next)=>{
+//GET /join
+router.get('/join',(req,res,next)=>{
         res.render('users/join');
     }
 )
@@ -12,15 +12,19 @@ router.get('/',(req,res,next)=>{
 //GET /vote-rooms
 router.get('/vote-rooms',sendToastForVC,getVoteRooms);
 
-//GET /info
-router.get('/info',(req,res,next)=>{
-    res.render('pages/info',req.roomInfo);
-})
-
-//GET /registration
-router.get('/registration',isLoggedIn,(req,res,next)=>{
+//GET /vote-rooms/registration
+router.get('/vote-rooms/registration',isLoggedIn,(req,res,next)=>{
     res.render('voteRooms/createRoom');
 })
+
+//GET /vote-rooms/:id
+router.get('/vote-rooms/:id',getVoteRoom);
+
+//GET /
+router.get('/',sendToastForVC,(req,res,next)=>{
+    res.render('pages/main',req.roomInfo);
+})
+
 
 // //POST /upload
 // router.post('/upload',(req,res)=>{

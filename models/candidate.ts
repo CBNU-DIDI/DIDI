@@ -8,11 +8,12 @@ enum genderCategory{
 export default class Candidate extends Model<InferAttributes<Candidate>, InferCreationAttributes<Candidate>>
 {
     declare id: CreationOptional<number>;
+    declare num: number;
     declare name:string;
     declare gender:string;
-    declare age:number;
+    declare age:string;
     declare img:string;
-    declare resume:string;
+    declare desc:string;
     
     declare RoomId:ForeignKey<Room['id']>;
     
@@ -23,6 +24,10 @@ export default class Candidate extends Model<InferAttributes<Candidate>, InferCr
                 primaryKey:true,
                 autoIncrement:true,
             },
+            num:{
+                type:Sequelize.INTEGER,
+                allowNull:false,
+            },
             name:{
                 type: Sequelize.STRING(20),
                 allowNull:false,
@@ -32,14 +37,14 @@ export default class Candidate extends Model<InferAttributes<Candidate>, InferCr
                 allowNull:false,
             },
             age:{
-                type:Sequelize.INTEGER,
+                type:Sequelize.STRING(20),
                 allowNull:false,
             },
             img:{
                 type:Sequelize.STRING(200),
                 allowNull:true
             },
-            resume:{
+            desc:{
                 type:Sequelize.STRING(500),
                 allowNull:false,
             }

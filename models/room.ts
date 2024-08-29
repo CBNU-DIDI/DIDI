@@ -1,7 +1,7 @@
 import  Sequelize,{Model, BelongsToManyGetAssociationsMixin, CreationOptional, InferAttributes, InferCreationAttributes, ForeignKey} from "sequelize";
 import User from "./user";
 import Candidate from "./candidate";
-import VC from "./userRoom";
+import Vc from "./vc";
 import UserRoom from "./userRoom";
 
 enum RoomCategory{
@@ -17,8 +17,10 @@ export default class Room extends Model<InferAttributes<Room>, InferCreationAttr
     declare category:RoomCategory
     declare desc:string;
     declare img:string;
-    declare s_date:Date;
-    declare e_date:Date;
+    declare "sDate":Date;
+    declare "eDate":Date;
+    declare creator:number
+    declare voterCount:number
 
     declare CandidateId:ForeignKey<Candidate['id']>;
     declare UserRoomId:ForeignKey<UserRoom['id']>;
@@ -38,7 +40,7 @@ export default class Room extends Model<InferAttributes<Room>, InferCreationAttr
             },
             category: {
                 type: Sequelize.ENUM(...Object.values(RoomCategory)),
-                allowNull: false,
+                allowNull: true,
             },
             desc:{
                 type:Sequelize.STRING(100),
@@ -48,12 +50,20 @@ export default class Room extends Model<InferAttributes<Room>, InferCreationAttr
                 type:Sequelize.STRING(200),
                 allowNull:true,
             },
-            s_date:{
+            sDate:{
                 type:Sequelize.DATE,
                 allowNull:false,
             },
-            e_date:{
+            eDate:{
                 type:Sequelize.DATE,
+                allowNull:false,
+            },
+            creator:{
+                type:Sequelize.INTEGER,
+                allowNull:false,
+            },
+            voterCount:{
+                type:Sequelize.INTEGER,
                 allowNull:false,
             }
         },{
@@ -72,5 +82,8 @@ export default class Room extends Model<InferAttributes<Room>, InferCreationAttr
             foreignKey:"RoomId",sourceKey:"id"
         });
         Room.belongsToMany(Room,{through:UserRoom,as:"vote"});
+        Room.hasMany(Vc,{
+            foreignKey:"RoomId",sourceKey:"id"
+        })
     }
 }
