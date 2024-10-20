@@ -1,7 +1,0 @@
-node_modules
-.gitignore
-*.git
-yarn.lock
-Dockerfile
-docker-compose.yaml
-.dockerignore
